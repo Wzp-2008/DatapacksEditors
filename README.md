@@ -1,7 +1,7 @@
 # ***DatapacksEditors***
 ***A Minecraft Datapacks Maker.***
 ***
-###Development member list：
+### Development member list：
 | Name                                               | Responsible           | email                  |
 |----------------------------------------------------|-----------------------|------------------------|
 | [wzpMC](https://github.com/Wzp-2008)               | Development\UI Design | minecraftwzpmc@163.com |
