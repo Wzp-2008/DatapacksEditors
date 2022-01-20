@@ -17,3 +17,4 @@ run_MC.Text=启动MC
 build_map.Text=导出蓝图
 about.Text=关于
 check_update.Text=检查更新
+open_MC.Text=打开MC版本管理页

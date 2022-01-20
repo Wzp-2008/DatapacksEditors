@@ -17,3 +17,4 @@ run_MC.Text=Start Minecraft
 build_map.Text=Export Blue Map
 about.Text=About
 check_update.Text=Check Update
+open_MC.Text=Open Minecraft Version Management Page
