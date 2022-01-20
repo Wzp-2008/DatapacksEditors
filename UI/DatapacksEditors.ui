@@ -67,11 +67,19 @@
      <string>MC版本管理</string>
     </property>
    </widget>
+   <widget class="QMenu" name="language">
+    <property name="title">
+     <string>语言</string>
+    </property>
+    <addaction name="ChineseSimplified"/>
+    <addaction name="English"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="edit"/>
    <addaction name="run"/>
    <addaction name="MC"/>
    <addaction name="help"/>
+   <addaction name="language"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="new_project">
@@ -129,7 +137,43 @@
     <string>检查更新</string>
    </property>
   </action>
+  <action name="ChineseSimplified">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>简体中文</string>
+   </property>
+  </action>
+  <action name="English">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>ChineseSimplified</sender>
+   <signal>triggered()</signal>
+   <receiver>English</receiver>
+   <slot>resetEnabled()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
