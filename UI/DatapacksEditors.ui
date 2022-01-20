@@ -158,22 +158,5 @@
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>ChineseSimplified</sender>
-   <signal>triggered()</signal>
-   <receiver>English</receiver>
-   <slot>resetEnabled()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
