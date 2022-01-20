@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'F:\我的python\DatapacksEditors\UI\DatapacksEditors.ui'
+# Form implementation generated from reading ui file 'J:\DatapacksEditors\UI\DatapacksEditors.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.2
 #
@@ -31,6 +31,8 @@ class Ui_MainWindow(object):
         self.help.setObjectName("help")
         self.MC = QtWidgets.QMenu(self.menubar)
         self.MC.setObjectName("MC")
+        self.language = QtWidgets.QMenu(self.menubar)
+        self.language.setObjectName("language")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -57,6 +59,13 @@ class Ui_MainWindow(object):
         self.about.setObjectName("about")
         self.check_update = QtGui.QAction(MainWindow)
         self.check_update.setObjectName("check_update")
+        self.ChineseSimplified = QtGui.QAction(MainWindow)
+        self.ChineseSimplified.setCheckable(True)
+        self.ChineseSimplified.setChecked(True)
+        self.ChineseSimplified.setObjectName("ChineseSimplified")
+        self.English = QtGui.QAction(MainWindow)
+        self.English.setCheckable(True)
+        self.English.setObjectName("English")
         self.export_menu.addAction(self.export_zip)
         self.file.addAction(self.new_project)
         self.file.addAction(self.open_project)
@@ -71,11 +80,14 @@ class Ui_MainWindow(object):
         self.run.addAction(self.build_map)
         self.help.addAction(self.about)
         self.help.addAction(self.check_update)
+        self.language.addAction(self.ChineseSimplified)
+        self.language.addAction(self.English)
         self.menubar.addAction(self.file.menuAction())
         self.menubar.addAction(self.edit.menuAction())
         self.menubar.addAction(self.run.menuAction())
         self.menubar.addAction(self.MC.menuAction())
         self.menubar.addAction(self.help.menuAction())
+        self.menubar.addAction(self.language.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -89,6 +101,7 @@ class Ui_MainWindow(object):
         self.run.setTitle(_translate("MainWindow", "运行"))
         self.help.setTitle(_translate("MainWindow", "帮助"))
         self.MC.setTitle(_translate("MainWindow", "MC版本管理"))
+        self.language.setTitle(_translate("MainWindow", "语言"))
         self.new_project.setText(_translate("MainWindow", "新建项目"))
         self.open_project.setText(_translate("MainWindow", "打开项目"))
         self.export_zip.setText(_translate("MainWindow", "导出为zip"))
@@ -100,3 +113,5 @@ class Ui_MainWindow(object):
         self.build_map.setText(_translate("MainWindow", "生成蓝图"))
         self.about.setText(_translate("MainWindow", "关于"))
         self.check_update.setText(_translate("MainWindow", "检查更新"))
+        self.ChineseSimplified.setText(_translate("MainWindow", "简体中文"))
+        self.English.setText(_translate("MainWindow", "English"))
