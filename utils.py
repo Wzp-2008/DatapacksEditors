@@ -81,7 +81,3 @@ def getAllMinecraftVersion() -> List[dict]:
                 url = i['url']
                 mcVersions_list.append({"id": id, "url": url})
     return mcVersions_list
-
-
-if __name__ == "__main__":
-    print(getAllMinecraftVersion())
