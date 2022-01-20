@@ -23,14 +23,112 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="file">
     <property name="title">
      <string>文件</string>
     </property>
+    <widget class="QMenu" name="export_menu">
+     <property name="title">
+      <string>导出</string>
+     </property>
+     <addaction name="export_zip"/>
+    </widget>
+    <addaction name="new_project"/>
+    <addaction name="open_project"/>
+    <addaction name="separator"/>
+    <addaction name="export_menu"/>
    </widget>
-   <addaction name="menu"/>
+   <widget class="QMenu" name="edit">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <addaction name="undo"/>
+    <addaction name="redo"/>
+    <addaction name="separator"/>
+    <addaction name="find"/>
+    <addaction name="replace"/>
+   </widget>
+   <widget class="QMenu" name="run">
+    <property name="title">
+     <string>运行</string>
+    </property>
+    <addaction name="run_MC"/>
+    <addaction name="build_map"/>
+   </widget>
+   <widget class="QMenu" name="help">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="about"/>
+    <addaction name="check_update"/>
+   </widget>
+   <widget class="QMenu" name="MC">
+    <property name="title">
+     <string>MC版本管理</string>
+    </property>
+   </widget>
+   <addaction name="file"/>
+   <addaction name="edit"/>
+   <addaction name="run"/>
+   <addaction name="MC"/>
+   <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="new_project">
+   <property name="text">
+    <string>新建项目</string>
+   </property>
+  </action>
+  <action name="open_project">
+   <property name="text">
+    <string>打开项目</string>
+   </property>
+  </action>
+  <action name="export_zip">
+   <property name="text">
+    <string>导出为zip</string>
+   </property>
+  </action>
+  <action name="undo">
+   <property name="text">
+    <string>撤销</string>
+   </property>
+  </action>
+  <action name="redo">
+   <property name="text">
+    <string>重做</string>
+   </property>
+  </action>
+  <action name="find">
+   <property name="text">
+    <string>查找</string>
+   </property>
+  </action>
+  <action name="replace">
+   <property name="text">
+    <string>替换</string>
+   </property>
+  </action>
+  <action name="run_MC">
+   <property name="text">
+    <string>在MC中启动本项目</string>
+   </property>
+  </action>
+  <action name="build_map">
+   <property name="text">
+    <string>生成蓝图</string>
+   </property>
+  </action>
+  <action name="about">
+   <property name="text">
+    <string>关于</string>
+   </property>
+  </action>
+  <action name="check_update">
+   <property name="text">
+    <string>检查更新</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
