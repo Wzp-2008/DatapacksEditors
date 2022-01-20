@@ -19,6 +19,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.useChinese()
+        self.getAllMinecraftVersion()
 
     def languageRadioChinese(self):
         if self.ChineseSimplified.isChecked():
@@ -55,6 +56,9 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             else:
                 ids = id.split(".")
                 eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
+
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
