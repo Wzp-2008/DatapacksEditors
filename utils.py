@@ -12,11 +12,18 @@ def readLang(filepath: str) -> dict:
     :return: A dict with ID and translation
     """
     R = {}
-    with open(filepath, "r",encoding="utf-8") as fp:
+    with open(filepath, "r", encoding="utf-8") as fp:
         lines = fp.readlines()
     for i in lines:
         sp = i.split("=")
         id = sp[0]
-        content = sp[1]
+        content = sp[1].replace("\n", "")
         R[id] = content
+    return R
+
+
+def minecraftVersionConversion(version: str) -> int:
+    R = 0
+    for i in list(map(int, version.split("."))):
+        R += i
     return R

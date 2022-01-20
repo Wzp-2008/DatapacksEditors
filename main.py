@@ -56,8 +56,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
                 ids = id.split(".")
                 eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
 
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ui = DatapacksEditors()
