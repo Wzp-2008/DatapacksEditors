@@ -29,6 +29,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         else:
             self.ChineseSimplified.setChecked(True)
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     ui = DatapacksEditors()
