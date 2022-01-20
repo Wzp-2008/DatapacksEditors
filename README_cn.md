@@ -5,4 +5,4 @@
 | 姓名                                                 | 职位      | 邮箱                     |
 |----------------------------------------------------|---------|------------------------|
 | [wzpMC](https://github.com/Wzp-2008)               | 开发\UI设计 | minecraftwzpmc@163.com |
-| [qingchenyou](https://github.com/qingchenyouforcc) | 开发\UI设计 | qingchenformc@163.com  |
+| [qingchenyou](https://github.com/qingchenyouforcc) | 开发\UI设计 | qingchenformc@outlook.com  |
