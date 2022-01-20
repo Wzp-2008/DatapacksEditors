@@ -6,6 +6,7 @@
 
 import sys
 from PyQt6.QtWidgets import QMainWindow, QApplication
+from PyQt6.uic.properties import QtGui
 
 import utils
 from UI.DatapacksEditors import Ui_MainWindow

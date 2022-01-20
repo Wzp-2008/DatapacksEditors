@@ -11,8 +11,8 @@ import requests
 
 def readLang(filepath: str) -> dict:
     """
-    read a .lang file
-    :param filepath: The File's path you want to read
+    read a language file
+    :param filepath: The File's path that you want to read
     :return: A dict with ID and translation
     """
     R = {}
