@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'F:\我的python\DatapacksEditors\UI\DatapacksEditors.ui'
+# Form implementation generated from reading ui file 'J:\DatapacksEditors\UI\DatapacksEditors.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.2
 #
@@ -90,7 +90,6 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.MC.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.ChineseSimplified.triggered.connect(self.English.resetEnabled) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
