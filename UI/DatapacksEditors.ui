@@ -77,9 +77,9 @@
    <addaction name="file"/>
    <addaction name="edit"/>
    <addaction name="run"/>
-   <addaction name="MC"/>
-   <addaction name="help"/>
    <addaction name="language"/>
+   <addaction name="help"/>
+   <addaction name="MC"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="new_project">
