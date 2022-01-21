@@ -5,7 +5,11 @@
 """
 
 import sys
+
+from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import *
+from PySide6.QtUiTools import QUiLoader
+
 import utils
 from UI.DatapacksEditors import Ui_MainWindow
 
@@ -17,8 +21,11 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.useChinese()
-        #self.MinecraftVersionList = utils.getAllMinecraftVersion()
-        #self.open_MC.clicked.connect()
+        open_project = self.open_project
+        open_project.triggered.connect(self.onFilebtnClicked)
+        
+        # self.MinecraftVersionList = utils.getAllMinecraftVersion()
+        # self.open_MC.clicked.connect()
 
     def languageRadioChinese(self):
         if self.ChineseSimplified.isChecked():
@@ -55,6 +62,15 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             else:
                 ids = id.split(".")
                 eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
+
+    def onFilebtnClicked(self):
+        fileName = QFileDialog.getOpenFileName(self, "选择文件", "C:/")
+        if fileName[0]:
+            f = open(fileName[0], 'r')
+
+            with f:
+                data = f.read()
+                self.textEdit.setText(data)
 
 
 # def openVersionManagement(self):
