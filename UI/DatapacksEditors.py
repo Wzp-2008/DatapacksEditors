@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'J:\DatapacksEditors\UI\DatapacksEditors.ui'
+# Form implementation generated from reading ui file 'F:\我的python\DatapacksEditors\UI\DatapacksEditors.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.2
 #
@@ -12,12 +12,21 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(821, 564)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(130, 160, 75, 71))
+        self.pushButton.setText("")
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 821, 22))
         self.menubar.setObjectName("menubar")
         self.file = QtWidgets.QMenu(self.menubar)
         self.file.setObjectName("file")
@@ -37,6 +46,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.toolBar = QtWidgets.QToolBar(MainWindow)
+        self.toolBar.setObjectName("toolBar")
+        MainWindow.addToolBar(QtCore.Qt.ToolBarArea.TopToolBarArea, self.toolBar)
         self.new_project = QtGui.QAction(MainWindow)
         self.new_project.setObjectName("new_project")
         self.open_project = QtGui.QAction(MainWindow)
@@ -68,6 +80,8 @@ class Ui_MainWindow(object):
         self.English.setObjectName("English")
         self.open_MC = QtGui.QAction(MainWindow)
         self.open_MC.setObjectName("open_MC")
+        self.save = QtGui.QAction(MainWindow)
+        self.save.setObjectName("save")
         self.export_menu.addAction(self.export_zip)
         self.file.addAction(self.new_project)
         self.file.addAction(self.open_project)
@@ -91,6 +105,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.language.menuAction())
         self.menubar.addAction(self.help.menuAction())
         self.menubar.addAction(self.MC.menuAction())
+        self.toolBar.addAction(self.save)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -105,6 +120,7 @@ class Ui_MainWindow(object):
         self.help.setTitle(_translate("MainWindow", "帮助"))
         self.MC.setTitle(_translate("MainWindow", "MC版本管理"))
         self.language.setTitle(_translate("MainWindow", "语言"))
+        self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.new_project.setText(_translate("MainWindow", "新建项目"))
         self.open_project.setText(_translate("MainWindow", "打开项目"))
         self.export_zip.setText(_translate("MainWindow", "导出为zip"))
@@ -119,3 +135,6 @@ class Ui_MainWindow(object):
         self.ChineseSimplified.setText(_translate("MainWindow", "简体中文"))
         self.English.setText(_translate("MainWindow", "English"))
         self.open_MC.setText(_translate("MainWindow", "打开MC版本管理页"))
+        self.save.setText(_translate("MainWindow", "保存"))
+        self.save.setToolTip(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:700;\">保存文件</span> (Ctrl+S)</p></body></html>"))
+        self.save.setShortcut(_translate("MainWindow", "Ctrl+S"))

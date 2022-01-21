@@ -77,7 +77,7 @@ def getAllMinecraftVersion() -> List[dict]:
     for i in minecraftList["versions"]:
         if i['type'] == "release":
             id = i['id']
-            if ContrastMinecraftVersion(id, "1.16.5",True):
+            if ContrastMinecraftVersion(id, "1.16.5", True):
                 url = i['url']
                 mcVersions_list.append({"id": id, "url": url})
     return mcVersions_list
