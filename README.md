@@ -1,7 +1,7 @@
 # ***DatapacksEditors***
 ***A Minecraft Datapacks Maker.***
 ***
-[English](https://github.com/Wzp-2008/DatapacksEditors/blob/master/README.md)
+[中文](https://github.com/Wzp-2008/DatapacksEditors/blob/master/README_cn.md)
 ***
 ### Development member list：
 | Name                                               | Responsible           | email                     |
