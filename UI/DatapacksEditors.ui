@@ -23,8 +23,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>160</y>
+      <x>110</x>
+      <y>240</y>
       <width>75</width>
       <height>71</height>
      </rect>
@@ -55,6 +55,7 @@
     </widget>
     <addaction name="new_project"/>
     <addaction name="open_project"/>
+    <addaction name="save_other"/>
     <addaction name="separator"/>
     <addaction name="export_menu"/>
    </widget>
@@ -102,7 +103,6 @@
    <addaction name="help"/>
    <addaction name="MC"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -195,6 +195,12 @@
    </property>
   </action>
   <action name="save">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>保存</string>
    </property>
@@ -203,6 +209,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="save_other">
+   <property name="text">
+    <string>另存为...</string>
    </property>
   </action>
  </widget>
