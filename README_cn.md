@@ -1,5 +1,8 @@
 # ***DatapacksEditors***
 一个***MC***数据包制作器
+***
+[English](https://github.com/Wzp-2008/DatapacksEditors/blob/master/README_cn.md)
+***
 ### 开发成员列表：
 
 | 姓名                                                 | 职位      | 邮箱                        |
