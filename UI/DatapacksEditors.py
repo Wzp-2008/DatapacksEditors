@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'F:\我的python\DatapacksEditors\UI\DatapacksEditors.ui'
+# Form implementation generated from reading ui file 'J:\DatapacksEditors\UI\DatapacksEditors.ui'
 #
 # Created by: PyQt6 UI code generator 6.2.2
 #
@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(821, 564)
+        MainWindow.resize(1128, 661)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -20,13 +20,12 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(110, 240, 75, 71))
-        self.pushButton.setText("")
-        self.pushButton.setObjectName("pushButton")
+        self.fileTree = QtWidgets.QTreeView(self.centralwidget)
+        self.fileTree.setGeometry(QtCore.QRect(0, 0, 181, 611))
+        self.fileTree.setObjectName("fileTree")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 821, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1128, 22))
         self.menubar.setObjectName("menubar")
         self.file = QtWidgets.QMenu(self.menubar)
         self.file.setObjectName("file")

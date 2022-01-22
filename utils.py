@@ -20,9 +20,9 @@ def readLang(filepath: str) -> dict:
     with open(filepath, "r", encoding="utf-8") as fp:
         lines = fp.readlines()
     for i in lines:
-        sp = i.split("=")
+        sp = i.replace("\n", "").split("=")
         id = sp[0]
-        content = sp[1].replace("\n", "")
+        content = sp[1]
         R[id] = content
     return R
 
@@ -82,3 +82,7 @@ def getAllMinecraftVersion() -> List[dict]:
                 url = i['url']
                 mcVersions_list.append({"id": id, "url": url})
     return mcVersions_list
+
+
+if __name__ == "__main__":
+    print(readLang("UI/res/ChineseSimplified.lang"))
