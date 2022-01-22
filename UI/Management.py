@@ -12,16 +12,25 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(254, 241)
-        self.listView = QtWidgets.QListView(Form)
-        self.listView.setGeometry(QtCore.QRect(0, 0, 256, 192))
-        self.listView.setObjectName("listView")
+        Form.resize(257, 271)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.minecrafts = QtWidgets.QListWidget(Form)
+        self.minecrafts.setObjectName("minecrafts")
+        self.verticalLayout.addWidget(self.minecrafts)
+        self.downloadInfo = QtWidgets.QLabel(Form)
+        self.downloadInfo.setObjectName("downloadInfo")
+        self.verticalLayout.addWidget(self.downloadInfo)
+        self.download_progress = QtWidgets.QProgressBar(Form)
+        self.download_progress.setProperty("value", 24)
+        self.download_progress.setObjectName("download_progress")
+        self.verticalLayout.addWidget(self.download_progress)
         self.download = QtWidgets.QPushButton(Form)
-        self.download.setGeometry(QtCore.QRect(0, 200, 75, 24))
         self.download.setObjectName("download")
+        self.verticalLayout.addWidget(self.download)
         self.done = QtWidgets.QPushButton(Form)
-        self.done.setGeometry(QtCore.QRect(160, 200, 75, 24))
         self.done.setObjectName("done")
+        self.verticalLayout.addWidget(self.done)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -29,5 +38,6 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
+        self.downloadInfo.setText(_translate("Form", "下载进度："))
         self.download.setText(_translate("Form", "下载"))
         self.done.setText(_translate("Form", "确定"))

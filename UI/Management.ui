@@ -6,49 +6,46 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>254</width>
-    <height>241</height>
+    <width>257</width>
+    <height>271</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="download">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>200</y>
-     <width>75</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>下载</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="done">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>200</y>
-     <width>75</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>确定</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="minecrafts"/>
+   </item>
+   <item>
+    <widget class="QLabel" name="downloadInfo">
+     <property name="text">
+      <string>下载进度：</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="download_progress">
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="download">
+     <property name="text">
+      <string>下载</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="done">
+     <property name="text">
+      <string>确定</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
