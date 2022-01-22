@@ -3,29 +3,38 @@
  Date:   2022/1/19
  Time:   21:32
 """
-
+import os.path
 import sys
 
-from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import *
-from PySide6.QtUiTools import QUiLoader
 
 import utils
 from UI.DatapacksEditors import Ui_MainWindow
+
+from loguru import logger as log
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
+        if not os.path.exists(os.path.join(os.getcwd(),"logs")):
+            os.mkdir("logs")
+        log.info("clear latest.log")
+        with open("./logs/latest.log","w") as fp:
+            fp.write("")
+        log.add("./logs/{time}.log")
+        log.add("./logs/latest.log")
+        log.info("client starting..")
         self.setupUi(self)
+        log.success("setupUi")
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
+        self.dialog = QFileDialog()
+        self.fileDialogTitle = "打开文件"
+        self.open_project.triggered.connect(self.On_open_project_btn_click)
         self.useChinese()
-        open_project = self.open_project
-        open_project.triggered.connect(self.onFilebtnClicked)
-        
-        # self.MinecraftVersionList = utils.getAllMinecraftVersion()
-        # self.open_MC.clicked.connect()
+        log.success("init Ui with Chinese lang!")
+        log.success("starting done.")
 
     def languageRadioChinese(self):
         if self.ChineseSimplified.isChecked():
@@ -49,9 +58,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             content = langEnglish[id]
             if id == "MainWindow.Title":
                 self.setWindowTitle(content)
+            elif id[0:2] == "v!":
+                exec(f"self.{id.replace('v!','')} = '{content}'")
             else:
                 ids = id.split(".")
                 eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
+        log.success("goto English")
 
     def useChinese(self):
         langChinese = utils.readLang("./UI/res/ChineseSimplified.lang")
@@ -59,22 +71,19 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             content = langChinese[id]
             if id == "MainWindow.Title":
                 self.setWindowTitle(content)
+            elif id[0:2] == "v!":
+                exec(f"self.{id.replace('v!','')} = '{content}'")
             else:
                 ids = id.split(".")
                 eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
+        log.success("goto Chinese")
 
-    def onFilebtnClicked(self):
-        fileName = QFileDialog.getOpenFileName(self, "选择文件", "C:/")
+    def On_open_project_btn_click(self):
+        fileName = self.dialog.getOpenFileName(self,self.fileDialogTitle)
         if fileName[0]:
-            f = open(fileName[0], 'r')
-
-            with f:
+            with open(fileName[0], 'r') as f:
                 data = f.read()
-                self.textEdit.setText(data)
-
-
-# def openVersionManagement(self):
-# self.versionManagement = Ch
+                print(data)
 
 
 if __name__ == "__main__":

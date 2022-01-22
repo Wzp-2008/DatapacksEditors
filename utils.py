@@ -7,6 +7,7 @@ from typing import List
 
 import ping3
 import requests
+from PyQt6.QtWidgets import QFileDialog
 
 
 def readLang(filepath: str) -> dict:
