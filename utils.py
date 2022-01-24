@@ -7,7 +7,6 @@ from typing import List
 
 import ping3
 import requests
-from PyQt6.QtWidgets import QFileDialog
 
 
 def readLang(filepath: str) -> dict:
@@ -20,10 +19,18 @@ def readLang(filepath: str) -> dict:
     with open(filepath, "r", encoding="utf-8") as fp:
         lines = fp.readlines()
     for i in lines:
-        sp = i.replace("\n", "").split("=")
-        id = sp[0]
-        content = sp[1]
-        R[id] = content
+        if i!='':
+            sp = i.replace("\n", "").split("=")
+            id = sp[0]
+            content = sp[1:len(sp)]
+            if len(content) != 1:
+                c = ''
+                for c_ in content:
+                    c += c_ + '='
+                content = c[0:len(c)-1]
+            else:
+                content = content[0]
+            R[id] = content
     return R
 
 
