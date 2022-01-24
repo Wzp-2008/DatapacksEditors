@@ -19,6 +19,7 @@ about.Text=关于
 check_update.Text=检查更新
 open_MC.Text=打开MC版本管理页
 save.Text=保存
+save.ToolTip=<html><head/><body><p><span style=\" font-weight:700;\">保存文件</span> (Ctrl+S)</p></body></html>
 v!fileDialogTitle=选择文件
 MC_window.download.Text=下载
 MC_window.done.Text=确定

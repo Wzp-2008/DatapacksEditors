@@ -5,6 +5,7 @@
 """
 import os.path
 import sys
+from winreg import *
 
 import requests
 from PyQt6.QtCore import *
@@ -39,6 +40,17 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.add("./logs/{time}.log")
         log.add("./logs/latest.log")
         log.info("client starting..")
+        self.reg = CreateKeyEx(HKEY_CURRENT_USER, r"Software\DatapacksEditors")
+        log.success("get Config reg")
+        try:
+            self.language_ = QueryValue(self.reg,"language")
+            print(self.language_)
+        except FileNotFoundError:
+            log.warning("Didn't find language value")
+            self.language_ = "ChineseSimplified"
+            SetValue(self.reg,"language",REG_SZ,self.language_)
+            log.success("Create language value with default language:ChineseSimplified")
+        log.success("get language config")
         log.info("detect Runtime folder")
         if not os.path.exists("Runtime"):
             log.info("mkdir Runtime")
@@ -56,7 +68,17 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.open_project.triggered.connect(self.On_open_project_btn_click)
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
-        self.lang = utils.readLang("./UI/res/ChineseSimplified.lang")
+        try:
+            self.lang = utils.readLang(f"./UI/res/{self.language_}.lang")
+        except FileNotFoundError:
+            self.language_ = "ChineseSimplified"
+        try:
+            self.lang = utils.readLang(f"./UI/res/{self.language_}.lang")
+        except FileNotFoundError as e:
+            log.error("The language file is incomplete. Please reinstall and try again")
+            log.error(e)
+            exit(1)
+        self.changeLanguage()
         self.minecraftVersionList = utils.getAllMinecraftVersion()
         self.MC_window.download_progress.setValue(0)
         self.doneTitle = "下载成功"
@@ -65,7 +87,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             self.MC_window.minecrafts.addItem(i['id'])
         self.MC_window.download.clicked.connect(self.On_download_btn_click)
         log.success("get MinecraftVersionList")
-        log.success("init Ui with Chinese lang!")
+        log.success(f"init Ui with {self.language_} lang!")
         log.success("starting done.")
 
     def languageRadioChinese(self):
@@ -86,11 +108,13 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
 
     def useEnglish(self):
         self.lang = utils.readLang("./UI/res/English.lang")
+        self.language_ = "English"
         self.changeLanguage()
         log.success("goto English")
 
     def useChinese(self):
-        self.lang = utils.readLang("./UI/res/ChineseSimplified.lang")
+        self.lang = utils.readLang("UI/res/ChineseSimplified.lang")
+        self.language_ = "ChineseSimplified"
         self.changeLanguage()
         log.success("goto Chinese")
 
@@ -107,6 +131,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
                     eval(f"self.{ids[0]}.{ids[1]}.set{ids[2]}('{content}')")
                 else:
                     eval(f"self.{ids[0]}.set{ids[1]}('{content}')")
+        SetValue(self.reg, "language", REG_SZ, self.language_)
 
     def On_open_project_btn_click(self):
         fileName = self.dialog.getOpenFileName(self, self.fileDialogTitle)
