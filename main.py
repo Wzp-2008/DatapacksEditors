@@ -6,8 +6,10 @@
 import os.path
 import sys
 from winreg import *
+import os
 
 import requests
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -32,6 +34,7 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
+        self.tab1 = None
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
@@ -43,12 +46,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.reg = CreateKeyEx(HKEY_CURRENT_USER, r"Software\DatapacksEditors")
         log.success("get Config reg")
         try:
-            self.language_ = QueryValue(self.reg,"language")
+            self.language_ = QueryValue(self.reg, "language")
             print(self.language_)
         except FileNotFoundError:
             log.warning("Didn't find language value")
             self.language_ = "ChineseSimplified"
-            SetValue(self.reg,"language",REG_SZ,self.language_)
+            SetValue(self.reg, "language", REG_SZ, self.language_)
             log.success("Create language value with default language:ChineseSimplified")
         log.success("get language config")
         log.info("detect Runtime folder")
@@ -66,6 +69,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.fileTree.setModel(self.fileModel)
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
+        self.new_project.triggered.connect(self.On_new_project_btn_click)
+        self.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
         try:
@@ -89,6 +94,9 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.success("get MinecraftVersionList")
         log.success(f"init Ui with {self.language_} lang!")
         log.success("starting done.")
+
+    def close_tab(self, index):
+        self.tabWidget.removeTab(index)
 
     def languageRadioChinese(self):
         if self.ChineseSimplified.isChecked():
@@ -139,6 +147,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             with open(fileName[0], 'r') as f:
                 data = f.read()
                 print(data)
+
+    def On_new_project_btn_click(self):
+        self.tab1 = QWidget()
+        tab = QtWidgets.QWidget()
+        tab.setObjectName("new.mcdee")
+        self.tabWidget.addTab(tab, 'new.mcdee')
 
     def On_download_btn_click(self):
         for i in self.minecraftVersionList:

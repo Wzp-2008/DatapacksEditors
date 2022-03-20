@@ -30,14 +30,20 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>50</y>
+      <y>-1</y>
       <width>561</width>
-      <height>411</height>
+      <height>461</height>
      </rect>
+    </property>
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+    <property name="tabsClosable">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
