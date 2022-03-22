@@ -14,7 +14,6 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
-
 from Downloader.Downloader import Downloader
 import utils
 from UI.DatapacksEditors import Ui_MainWindow
@@ -65,20 +64,20 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
-        #文件树
+        # 文件树
         self.fileModel = QFileSystemModel()
         self.fileModel.setRootPath("C:/")
         self.fileTree.setModel(self.fileModel)
         self.fileTree.doubleClicked.connect(self.initUI)
-        #打开文件
+        # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
-        #新建文件
+        # 新建文件
         self.new_project.triggered.connect(self.On_new_project_btn_click)
         self.new_project.triggered.connect(self.click_count)
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
-        #下载窗口
+        # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
         try:
@@ -103,7 +102,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.success(f"init Ui with {self.language_} lang!")
         log.success("starting done.")
 
-    #文件树操作
+    # 文件树操作
     def initUI(self, Qmodelidx):
         filePath = self.fileModel.filePath(Qmodelidx)
         print(filePath)
@@ -164,15 +163,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
                 print(data)
 
     def On_new_project_btn_click(self):
-        tab = QtWidgets.QWidget()
-        self.tabWidget.addTab(tab, 'new.mcdee')
-        text = QTextEdit()
-
+        text = QtWidgets.QTextEdit()
+        self.tabWidget.addTab(text, 'new.mcdee')
 
     def click_count(self):
         self.count += 1
         print("open:" + str(self.count))
-
 
     def On_download_btn_click(self):
         for i in self.minecraftVersionList:
