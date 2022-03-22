@@ -21,7 +21,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.fileTree = QtWidgets.QTreeView(self.centralwidget)
-        self.fileTree.setGeometry(QtCore.QRect(0, 0, 181, 611))
+        self.fileTree.setGeometry(QtCore.QRect(0, 0, 181, 461))
         self.fileTree.setObjectName("fileTree")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(180, -1, 561, 461))
