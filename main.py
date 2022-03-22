@@ -77,6 +77,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.create_ff.triggered.connect(self.click_count)
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
+        # 创建完整数据包
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
