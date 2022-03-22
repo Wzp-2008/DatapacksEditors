@@ -18,6 +18,7 @@ from Downloader.Downloader import Downloader
 import utils
 from UI.DatapacksEditors import Ui_MainWindow
 from UI.Management import Ui_Form
+from UI.create_full import Ui_createfullwindows
 
 from loguru import logger as log
 
@@ -30,6 +31,12 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
     def OPEN(self):
         self.show()
 
+class Create_Full_Window(QWidget, Ui_createfullwindows):
+    def __init__(self):
+        super(Create_Full_Window, self).__init__()
+        self.setupUi(self)
+    def OPEN(self):
+        self.show()
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -78,6 +85,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
         # 创建完整数据包
+        self.cfwindows = Create_Full_Window()
+        self.full_pack.triggered.connect(self.cfwindows.OPEN)
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
