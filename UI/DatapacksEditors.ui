@@ -66,8 +66,19 @@
      </property>
      <addaction name="export_zip"/>
     </widget>
+    <widget class="QMenu" name="new_project">
+     <property name="title">
+      <string>新建...</string>
+     </property>
+     <addaction name="full_pack"/>
+     <addaction name="separator"/>
+     <addaction name="create_ff"/>
+     <addaction name="create_load"/>
+     <addaction name="create_other"/>
+    </widget>
     <addaction name="new_project"/>
     <addaction name="open_project"/>
+    <addaction name="actsave"/>
     <addaction name="save_other"/>
     <addaction name="separator"/>
     <addaction name="export_menu"/>
@@ -128,11 +139,6 @@
    </attribute>
    <addaction name="save"/>
   </widget>
-  <action name="new_project">
-   <property name="text">
-    <string>新建项目</string>
-   </property>
-  </action>
   <action name="open_project">
    <property name="text">
     <string>打开项目</string>
@@ -227,6 +233,36 @@
   <action name="save_other">
    <property name="text">
     <string>另存为...</string>
+   </property>
+  </action>
+  <action name="full_pack">
+   <property name="text">
+    <string>完整数据包</string>
+   </property>
+  </action>
+  <action name="create_ff">
+   <property name="text">
+    <string>mc函数文件</string>
+   </property>
+  </action>
+  <action name="create_load">
+   <property name="text">
+    <string>json文件</string>
+   </property>
+  </action>
+  <action name="create_other">
+   <property name="text">
+    <string>其他</string>
+   </property>
+  </action>
+  <action name="actioncreate_tick">
+   <property name="text">
+    <string>create_tick</string>
+   </property>
+  </action>
+  <action name="actsave">
+   <property name="text">
+    <string>保存</string>
    </property>
   </action>
  </widget>
