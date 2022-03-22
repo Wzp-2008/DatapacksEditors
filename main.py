@@ -73,8 +73,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         #打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
+        #新建文件
         self.new_project.triggered.connect(self.On_new_project_btn_click)
+        self.new_project.triggered.connect(self.click_count)
+        self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
+        #下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
         try:
@@ -106,6 +110,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
+        self.count = self.count - 1
+        print("Remain tabs:" + str(self.count))
 
     def languageRadioChinese(self):
         if self.ChineseSimplified.isChecked():
@@ -158,10 +164,14 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
                 print(data)
 
     def On_new_project_btn_click(self):
-        self.tab1 = QWidget()
         tab = QtWidgets.QWidget()
-        tab.setObjectName("new.mcdee")
         self.tabWidget.addTab(tab, 'new.mcdee')
+        text = QTextEdit()
+
+
+    def click_count(self):
+        self.count += 1
+        print("open:" + str(self.count))
 
 
     def On_download_btn_click(self):
