@@ -72,9 +72,9 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
-        # 新建文件
-        self.new_project.triggered.connect(self.On_new_project_btn_click)
-        self.new_project.triggered.connect(self.click_count)
+        # 新建mc函数文件
+        self.create_ff.triggered.connect(self.On_new_function_btn_click)
+        self.create_ff.triggered.connect(self.click_count)
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
         # 下载窗口
@@ -162,9 +162,9 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
                 data = f.read()
                 print(data)
 
-    def On_new_project_btn_click(self):
+    def On_new_function_btn_click(self):
         text = QtWidgets.QTextEdit()
-        self.tabWidget.addTab(text, 'new.mcdee')
+        self.tabWidget.addTab(text, 'new.mcfunction')
 
     def click_count(self):
         self.count += 1
