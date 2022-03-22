@@ -14,6 +14,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 
+
 from Downloader.Downloader import Downloader
 import utils
 from UI.DatapacksEditors import Ui_MainWindow
@@ -64,9 +65,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
+        #文件树
         self.fileModel = QFileSystemModel()
         self.fileModel.setRootPath("C:/")
         self.fileTree.setModel(self.fileModel)
+        self.fileTree.doubleClicked.connect(self.initUI)
+        #打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
         self.new_project.triggered.connect(self.On_new_project_btn_click)
@@ -94,6 +98,11 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.success("get MinecraftVersionList")
         log.success(f"init Ui with {self.language_} lang!")
         log.success("starting done.")
+
+    #文件树操作
+    def initUI(self, Qmodelidx):
+        filePath = self.fileModel.filePath(Qmodelidx)
+        print(filePath)
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
@@ -153,6 +162,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         tab = QtWidgets.QWidget()
         tab.setObjectName("new.mcdee")
         self.tabWidget.addTab(tab, 'new.mcdee')
+
 
     def On_download_btn_click(self):
         for i in self.minecraftVersionList:
