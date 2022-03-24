@@ -130,7 +130,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLineEdit" name="projectPath"/>
+       <widget class="QLineEdit" name="packPath"/>
       </item>
       <item>
        <widget class="QPushButton" name="btn_change_Pack">
@@ -169,7 +169,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLineEdit" name="packPath"/>
+       <widget class="QLineEdit" name="projectPath"/>
       </item>
       <item>
        <widget class="QPushButton" name="btn_change_P">

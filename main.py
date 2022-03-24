@@ -40,10 +40,11 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         self.pPath = None
         self.projectName = None
         self.setupUi(self)
-        # 改变数据包路径
+        # 改变路径
         self.btn_change_Pack.clicked.connect(self.choosePackPath)
-        self.datapackPathDialog = QFileDialog()
-        self.datapackPathDialogTitle = "选择路径"
+        self.btn_change_P.clicked.connect(self.chooseProjectPath)
+        self.PathDialog = QFileDialog()
+        self.PathDialogTitle = "选择文件夹"
         # 获取项目有关信息
         self.packname.textChanged.connect(self.getProjectName)
         self.packPath.textChanged.connect(self.getPackPath)
@@ -64,7 +65,12 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         print("datapackPath:" + str(text))
 
     def choosePackPath(self):
-        self.datapackPath = self.datapackPathDialog.getOpenFileName(self, self.datapackPathDialogTitle)
+        packPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
+        self.packPath.setText(packPath)
+
+    def chooseProjectPath(self):
+        projectPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
+        self.projectPath.setText(projectPath)
 
     def OPEN(self):
         self.show()
