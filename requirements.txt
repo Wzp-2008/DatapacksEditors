@@ -3,3 +3,6 @@ requests~=2.26.0
 ping3~=3.0.2
 loguru~=0.5.3
 PySide6~=6.2.2.1
+future>=0.18.2
+pypiwin32>=223
+pywin32>=228
