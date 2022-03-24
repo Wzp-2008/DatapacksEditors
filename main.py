@@ -43,6 +43,13 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
+    def __showRestoreWindow(self):
+        """ 复原窗口并更换最大化按钮的图标 """
+        if self.window().isMaximized():
+            self.window().showNormal()
+        else:
+            self.window().showMaximized()
+
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
         # 无边框初始化
@@ -105,7 +112,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.namel.setIcon(QIcon('favicon.ico'))
         # 将按钮的点击信号连接到槽函数
         self.minBt.triggered.connect(self.window().showMinimized)
-        self.maxBt.clicked.connect(self.__showRestoreWindow)
+        self.maxBt.triggered.connect(self.__showRestoreWindow)
         self.closeBt.triggered.connect(self.window().close)
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
@@ -160,13 +167,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def mouseDoubleClickEvent(self, event):
         """ 双击最大化/还原窗口 """
         self.__showRestoreWindow()
-
-    def __showRestoreWindow(self):
-        """ 复原窗口并更换最大化按钮的图标 """
-        if self.window().isMaximized():
-            self.window().showNormal()
-        else:
-            self.window().showMaximized()
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
