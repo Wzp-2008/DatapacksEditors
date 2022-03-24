@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>742</width>
-    <height>506</height>
+    <width>773</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,26 +20,26 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DatapackEditors</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="source.qrc">
+    <normaloff>:/ico/favicon.ico</normaloff>:/ico/favicon.ico</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTreeView" name="fileTree">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>181</width>
-      <height>461</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>-1</y>
-      <width>561</width>
-      <height>461</height>
+      <y>0</y>
+      <width>601</width>
+      <height>490</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -46,15 +49,70 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QTabWidget" name="tabWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>181</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::West</enum>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <property name="elideMode">
+     <enum>Qt::ElideLeft</enum>
+    </property>
+    <property name="documentMode">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="file_tab">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>文件管理器(Ctrl+Alt+1)</string>
+     </property>
+     <property name="toolTipDuration">
+      <number>3</number>
+     </property>
+     <attribute name="icon">
+      <iconset resource="source.qrc">
+       <normaloff>:/ico/file.ico</normaloff>:/ico/file.ico</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>文件</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>742</width>
+     <width>773</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="file">
     <property name="title">
@@ -67,6 +125,12 @@
      <addaction name="export_zip"/>
     </widget>
     <widget class="QMenu" name="new_project">
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="acceptDrops">
+      <bool>true</bool>
+     </property>
      <property name="title">
       <string>新建...</string>
      </property>
@@ -120,6 +184,16 @@
     <addaction name="ChineseSimplified"/>
     <addaction name="English"/>
    </widget>
+   <widget class="QMenu" name="namel">
+    <property name="title">
+     <string>ico</string>
+    </property>
+    <addaction name="minBt"/>
+    <addaction name="maxBt"/>
+    <addaction name="separator"/>
+    <addaction name="closeBt"/>
+   </widget>
+   <addaction name="namel"/>
    <addaction name="file"/>
    <addaction name="edit"/>
    <addaction name="run"/>
@@ -127,17 +201,17 @@
    <addaction name="help"/>
    <addaction name="MC"/>
   </widget>
-  <widget class="QToolBar" name="toolBar">
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar_4">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>toolBar_4</string>
    </property>
    <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
+    <enum>BottomToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="save"/>
   </widget>
   <action name="open_project">
    <property name="text">
@@ -265,7 +339,24 @@
     <string>保存</string>
    </property>
   </action>
+  <action name="minBt">
+   <property name="text">
+    <string>minBt</string>
+   </property>
+  </action>
+  <action name="maxBt">
+   <property name="text">
+    <string>maxBt</string>
+   </property>
+  </action>
+  <action name="closeBt">
+   <property name="text">
+    <string>closeBt</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="source.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -3,23 +3,24 @@
  Date:   2022/1/19
  Time:   21:32
 """
+import utils
 import os.path
 import sys
-from winreg import *
 import os
-
 import requests
-from PyQt6 import QtWidgets
+import win32con
+import ctypes
+from winreg import *
+from win32api import SendMessage
+from win32gui import ReleaseCapture
+from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
-
 from Downloader.Downloader import Downloader
-import utils
 from UI.DatapacksEditors import Ui_MainWindow
 from UI.Management import Ui_Form
 from UI.create_full import Ui_createfullwindows
-
 from loguru import logger as log
 
 
@@ -31,17 +32,30 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
     def OPEN(self):
         self.show()
 
+
 class Create_Full_Window(QWidget, Ui_createfullwindows):
     def __init__(self):
         super(Create_Full_Window, self).__init__()
         self.setupUi(self)
+
     def OPEN(self):
         self.show()
+
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
+        # 无边框初始化
+        self.window_point = None
+        self.start_point = None
+        self._startPos = None
+        self._endPos = None
+        self._tracking = False
         self.tab1 = None
+        # 无边框，窗口美化
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setWindowIcon(QIcon('favicon.ico'))
+        #
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
@@ -74,8 +88,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         # 文件树
         self.fileModel = QFileSystemModel()
         self.fileModel.setRootPath("C:/")
-        self.fileTree.setModel(self.fileModel)
-        self.fileTree.doubleClicked.connect(self.initUI)
+        #self.fileTree.setModel(self.fileModel)
+        #self.fileTree.doubleClicked.connect(self.initUI)
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
@@ -87,6 +101,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         # 创建完整数据包
         self.cfwindows = Create_Full_Window()
         self.full_pack.triggered.connect(self.cfwindows.OPEN)
+        # 图标
+        self.namel.setIcon(QIcon('favicon.ico'))
+        # 将按钮的点击信号连接到槽函数
+        self.minBt.triggered.connect(self.window().showMinimized)
+        self.maxBt.clicked.connect(self.__showRestoreWindow)
+        self.closeBt.triggered.connect(self.window().close)
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
@@ -111,11 +131,42 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.success("get MinecraftVersionList")
         log.success(f"init Ui with {self.language_} lang!")
         log.success("starting done.")
+        self.ismoving = False
+        self.menubar.setNativeMenuBar(False)
 
     # 文件树操作
     def initUI(self, Qmodelidx):
         filePath = self.fileModel.filePath(Qmodelidx)
         print(filePath)
+
+    # 无边框
+    # 重写鼠标事件
+    def mouseMoveEvent(self, e: QMouseEvent):
+        if self._tracking:
+            self._endPos = e.pos() - self._startPos
+            self.move(self.pos() + self._endPos)
+
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self._startPos = QPoint(e.pos())
+            self._tracking = True
+
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self._tracking = False
+            self._startPos = None
+            self._endPos = None
+
+    def mouseDoubleClickEvent(self, event):
+        """ 双击最大化/还原窗口 """
+        self.__showRestoreWindow()
+
+    def __showRestoreWindow(self):
+        """ 复原窗口并更换最大化按钮的图标 """
+        if self.window().isMaximized():
+            self.window().showNormal()
+        else:
+            self.window().showMaximized()
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
@@ -175,6 +226,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def On_new_function_btn_click(self):
         text = QtWidgets.QTextEdit()
         self.tabWidget.addTab(text, 'new.mcfunction')
+        # 文本框去边
+        text.setStyleSheet("border:none;")
 
     def click_count(self):
         self.count += 1
