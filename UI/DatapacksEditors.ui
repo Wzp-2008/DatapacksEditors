@@ -79,7 +79,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -104,12 +104,12 @@
        <normaloff>:/ico/file.ico</normaloff>:/ico/file.ico</iconset>
      </attribute>
      <attribute name="title">
-      <string>文件</string>
+      <string>项目</string>
      </attribute>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>蓝图</string>
      </attribute>
     </widget>
    </widget>

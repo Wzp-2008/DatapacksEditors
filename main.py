@@ -11,8 +11,6 @@ import requests
 import win32con
 import ctypes
 from winreg import *
-from win32api import SendMessage
-from win32gui import ReleaseCapture
 from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
@@ -130,10 +128,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
         # 文件树
-        self.fileModel = QFileSystemModel()
-        self.fileModel.setRootPath("C:/")
-        # self.fileTree.setModel(self.fileModel)
-        # self.fileTree.doubleClicked.connect(self.initUI)
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
