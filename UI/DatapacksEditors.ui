@@ -3,7 +3,7 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -19,6 +19,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>DatapackEditors</string>
   </property>
@@ -33,6 +39,12 @@
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -67,7 +79,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -92,12 +104,12 @@
        <normaloff>:/ico/file.ico</normaloff>:/ico/file.ico</iconset>
      </attribute>
      <attribute name="title">
-      <string>文件</string>
+      <string>项目</string>
      </attribute>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>蓝图</string>
      </attribute>
     </widget>
    </widget>
@@ -112,7 +124,10 @@
     </rect>
    </property>
    <property name="defaultUp">
-    <bool>true</bool>
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
    </property>
    <widget class="QMenu" name="file">
     <property name="title">
@@ -341,17 +356,17 @@
   </action>
   <action name="minBt">
    <property name="text">
-    <string>minBt</string>
+    <string>最小化</string>
    </property>
   </action>
   <action name="maxBt">
    <property name="text">
-    <string>maxBt</string>
+    <string>最大化</string>
    </property>
   </action>
   <action name="closeBt">
    <property name="text">
-    <string>closeBt</string>
+    <string>关闭</string>
    </property>
   </action>
  </widget>

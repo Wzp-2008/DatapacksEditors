@@ -11,8 +11,6 @@ import requests
 import win32con
 import ctypes
 from winreg import *
-from win32api import SendMessage
-from win32gui import ReleaseCapture
 from PyQt6 import QtWidgets, QtCore
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
@@ -36,10 +34,47 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
 class Create_Full_Window(QWidget, Ui_createfullwindows):
     def __init__(self):
         super(Create_Full_Window, self).__init__()
+        self.datapackPath = None
+        self.pPath = None
+        self.projectName = None
         self.setupUi(self)
+        # 改变路径
+        self.btn_change_Pack.clicked.connect(self.choosePackPath)
+        self.btn_change_P.clicked.connect(self.chooseProjectPath)
+        self.PathDialog = QFileDialog()
+        self.PathDialogTitle = "选择文件夹"
+        # 获取项目有关信息
+        self.packname.textChanged.connect(self.getProjectName)
+        self.packPath.textChanged.connect(self.getPackPath)
+        self.projectPath.textChanged.connect(self.getProjectPath)
+        # 创建按钮连接
+        self.create_full_c.clicked.connect(self.create_full_pack)
+
+    def getProjectName(self, text):
+        self.projectName = text
+        print("projectName:" + str(text))
+
+    def getProjectPath(self, text):
+        self.pPath = text
+        print("projectPath:" + str(text))
+
+    def getPackPath(self, text):
+        self.datapackPath = text
+        print("datapackPath:" + str(text))
+
+    def choosePackPath(self):
+        packPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
+        self.packPath.setText(packPath)
+
+    def chooseProjectPath(self):
+        projectPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
+        self.projectPath.setText(projectPath)
 
     def OPEN(self):
         self.show()
+
+    def create_full_pack(self):
+        pass
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
@@ -93,10 +128,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
         # 文件树
-        self.fileModel = QFileSystemModel()
-        self.fileModel.setRootPath("C:/")
-        #self.fileTree.setModel(self.fileModel)
-        #self.fileTree.doubleClicked.connect(self.initUI)
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
