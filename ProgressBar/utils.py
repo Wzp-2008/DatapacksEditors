@@ -1,6 +1,3 @@
-from os import remove
-from time import time
-
 K = 1024
 M = K ** 2
 G = K ** 3
@@ -50,23 +47,3 @@ def time2str(sec: int) -> str:
         return f"{h}时{m}分{s}秒"
     else:
         return "大于一天"
-
-
-def many2one(thread_num: int, save: str) -> None:
-    print("开始合并文件")
-    start = time()
-    long = 0
-    with open(save, "ab") as fp:
-        for i in range(thread_num):
-            filename = f"{save}.{i}.tmp"
-            with open(filename, "rb") as fc:
-                content = fc.read()
-                long += len(content)
-                fp.write(content)
-            remove(filename)
-    end = time()
-    used = int(end - start)
-    try:
-        print(f"合并完成，耗时：{time2str(used)}，速度：{bsize2str(long // used)}/s")
-    except ZeroDivisionError:
-        print(f"合并完成，耗时：%.2f毫秒，速度：太快了，没测出来"%((end - start)*1000))
