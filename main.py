@@ -8,10 +8,8 @@ import os.path
 import sys
 import os
 import requests
-import win32con
-import ctypes
 from winreg import *
-from PyQt6 import QtWidgets, QtCore
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -96,7 +94,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.tab1 = None
         # 无边框，窗口美化
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setWindowIcon(QIcon('favicon.ico'))
+        self.setWindowIcon(QIcon('icon.ico'))
         #
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
@@ -140,7 +138,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.cfwindows = Create_Full_Window()
         self.full_pack.triggered.connect(self.cfwindows.OPEN)
         # 图标
-        self.namel.setIcon(QIcon('favicon.ico'))
+        self.namel.setIcon(QIcon('icon.ico'))
         # 将按钮的点击信号连接到槽函数
         self.minBt.triggered.connect(self.window().showMinimized)
         self.maxBt.triggered.connect(self.__showRestoreWindow)
