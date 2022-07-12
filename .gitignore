@@ -132,4 +132,7 @@ dmypy.json
 .idea/
 
 #Runtime
-.Runtime/
+.Runtime
+
+#games
+games/

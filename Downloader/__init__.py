@@ -3,4 +3,4 @@
  Date:   2022/1/22
  Time:   13:41
 """
-__all__ = ["Downloader"]
+from .Downloader import Downloader

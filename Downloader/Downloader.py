@@ -9,6 +9,7 @@ from threading import Thread
 from loguru import logger as log
 from typing import Optional, Dict, List
 from requests import Session
+from requests.structures import CaseInsensitiveDict
 
 from .utils import many2one
 from ProgressBar import MyBar
@@ -110,18 +111,20 @@ class Downloader(object):
         if path.exists(save2):
             remove(save2)
         head_rep = self.session.head(url, headers=self.headers, proxies=self.proxies)
-        response_head: Dict = head_rep.json()
+        response_head: CaseInsensitiveDict[str] = head_rep.headers
         try:
             file_long = response_head["content-length"]
         except KeyError:
             file_long = -1
+        file_long = int(file_long)
         bar.full = file_long
         if file_long == -1:
             log.info(f"{self.thread_name}  Cannot get file long, using single thread")
             t = DownloadThread(save2, url, bar, 0, self.session, -1, -1, self.headers, self.proxies, True)
-            bar.start()
+            bar.new_bar()
             t.start()
-            bar.join()
+            while bar.running:
+                pass
             return
         downloaded = 0
         part = (file_long // self.thread_num) + 1
@@ -132,13 +135,16 @@ class Downloader(object):
             if file_long < 0:
                 file_long += part
                 part = file_long - self.thread_num + 1
+                print(part)
             threads.append(DownloadThread(save2, url=url, bar=bar, session=self.session, headers=self.headers,
                                           begin=downloaded, to=downloaded + part, proxies=self.proxies, num=i))
             downloaded += part + 1
             log.info(f"The {i}th thread needs to download {part}")
         log.info(f"Starting download with {self.thread_num} threads")
-        bar.start()
+        bar.new_bar()
         for t in threads:
             t.start()
-        bar.join()
+        while bar.running:
+            pass
         many2one(self.thread_num, save2)
+        bar.reset()

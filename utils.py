@@ -62,24 +62,12 @@ def ContrastMinecraftVersion(version1: str, version2: str, equals: bool) -> bool
         return False
 
 
-def selectServer(serverList: List[str]) -> str:
-    """
-    Choose the server which is the lowest ping
-    :param serverList: URL list
-    :return: the server which is the lowest ping
-    """
-    R = {}
-    TIME = []
-    for i in serverList:
-        time = ping3.ping(i.replace("http://", "").replace("https://", "".replace("/", "")), timeout=1, unit='ms')
-        R[time] = i
-        TIME.append(time)
-    return R[min(TIME)]
+
 
 
 def getAllMinecraftVersion() -> List[dict]:
     sourceList = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com", "https://download.mcbbs.net"]
-    source = selectServer(sourceList) + "/mc/game/version_manifest.json"
+    source = "https://download.mcbbs.net" + "/mc/game/version_manifest.json"
     minecraftList = requests.get(source).json()
     mcVersions_list = []
     for i in minecraftList["versions"]:

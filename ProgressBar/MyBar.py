@@ -9,6 +9,7 @@ class MyBar(Thread):
     now_old: int
     full: int
     running: bool
+    thread_run: bool
 
     def __init__(self, full: int = 0, now: int = 0):
         super().__init__()
@@ -16,16 +17,17 @@ class MyBar(Thread):
         self.now_old = now
         self.full = full
         self.running = False
+        self.thread_run = True
 
     def run(self) -> None:
-        self.running = True
-        while self.running:
-            if self.full == self.now:
-                self.close_bar()
-            else:
-                self.on_update()
-                self.now_old = self.now
-                sleep(1)
+        while self.thread_run:
+            while self.running:
+                if self.full == self.now:
+                    self.close_bar()
+                else:
+                    self.on_update()
+                    self.now_old = self.now
+                    sleep(1)
 
     def close_bar(self):
         self.now = self.full
@@ -62,5 +64,20 @@ class MyBar(Thread):
             if self.full == self.now:
                 now_progress = 50
                 left_progress = 0
-        print("\r|", '▇' * now_progress, '□' * left_progress, '|  ', speed_str, '/s', '  剩余时间：', left_time_str, end="",
-              sep="", flush=True)
+        print(
+            f"\r|{'▇' * now_progress}{'□' * left_progress}| {speed_str}/s 剩余时间：{left_time_str} debug：{self.now}/{self.full}",
+            end="",
+            sep="",
+            flush=True)
+
+    def stop(self):
+        self.thread_run = False
+
+    def reset(self):
+        self.now = 0
+        self.now_old = 0
+        self.full = 0
+        self.running = False
+
+    def new_bar(self):
+        self.running = True
