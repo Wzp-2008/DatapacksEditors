@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
         MainWindow.setMouseTracking(True)
         MainWindow.setAcceptDrops(True)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/ico/icon.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap(":/ico/favicon.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setWindowOpacity(1.0)
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonIconOnly)
@@ -179,15 +179,15 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(-1)
-        self.tabWidget_2.setCurrentIndex(1)
+        self.tabWidget_2.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "DatapackEditors"))
         self.file_tab.setToolTip(_translate("MainWindow", "文件管理器(Ctrl+Alt+1)"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.file_tab), _translate("MainWindow", "文件"))
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.file_tab), _translate("MainWindow", "项目"))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("MainWindow", "蓝图"))
         self.file.setTitle(_translate("MainWindow", "文件"))
         self.export_menu.setTitle(_translate("MainWindow", "导出"))
         self.new_project.setTitle(_translate("MainWindow", "新建..."))

@@ -3,6 +3,8 @@
  Date:   2022/1/19
  Time:   21:32
 """
+import json
+
 import utils
 import os.path
 import sys
@@ -32,6 +34,8 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
 class Create_Full_Window(QWidget, Ui_createfullwindows):
     def __init__(self):
         super(Create_Full_Window, self).__init__()
+        self.v116 = None
+        self.v119 = None
         self.datapackPath = None
         self.pPath = None
         self.projectName = None
@@ -45,6 +49,8 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         self.packname.textChanged.connect(self.getProjectName)
         self.packPath.textChanged.connect(self.getPackPath)
         self.projectPath.textChanged.connect(self.getProjectPath)
+        self.v_116.toggled['bool'].connect(self.readVersion)
+        self.v_119.toggled['bool'].connect(self.readVersion)
         # 创建按钮连接
         self.create_full_c.clicked.connect(self.create_full_pack)
 
@@ -68,11 +74,39 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         projectPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
         self.projectPath.setText(projectPath)
 
+    def readVersion(self):
+        if self.v_116.isChecked():
+            self.v116 = 1
+        if self.v_119.isChecked():
+            self.v119 = 1
+
     def OPEN(self):
         self.show()
 
     def create_full_pack(self):
-        pass
+        os.chdir(self.datapackPath)
+        os.mkdir("data")
+        if self.v119 == 1:
+            index = {
+                "pack": {
+                    "pack_format": 10,
+                    "description": "Hello World"
+                }
+            }
+            with open("pack.mcmeta", "x") as fp:
+                json.dump(index, fp, indent=4, ensure_ascii=False)
+
+        if self.v116 == 1:
+            index = {
+                "pack": {
+                    "pack_format": 6,
+                    "description": "Hello World你"
+                }
+            }
+            with open("pack.mcmeta", "x") as fp:
+                json.dump(index, fp, indent=4, ensure_ascii=False)
+        os.chdir(self.datapackPath + "/data")
+        self.close()
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
@@ -266,7 +300,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         for i in self.minecraftVersionList:
             if i['id'] == self.MC_window.minecrafts.selectedItems()[0].text():
                 url = i['url']
-                sourceList = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com",
+                sourceList = ["https://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com",
                               "https://download.mcbbs.net"]
                 s = utils.selectServer(sourceList)
                 source = url.replace("https://launchermeta.mojang.com", s)
