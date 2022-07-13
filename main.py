@@ -3,6 +3,7 @@
  Date:   2022/1/19
  Time:   21:32
 """
+import _io
 import json
 
 import utils
@@ -20,6 +21,12 @@ from UI.DatapacksEditors import Ui_MainWindow
 from UI.Management import Ui_Form
 from UI.create_full import Ui_createfullwindows
 from loguru import logger as log
+
+temp: _io.TextIOWrapper = None
+datapackPath = None
+pPath = None
+projectName = None
+pTree = None
 
 
 class MC_Version_Management_Window(QWidget, Ui_Form):
@@ -55,15 +62,18 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         self.create_full_c.clicked.connect(self.create_full_pack)
 
     def getProjectName(self, text):
-        self.projectName = text
+        global projectName
+        projectName = text
         print("projectName:" + str(text))
 
     def getProjectPath(self, text):
-        self.pPath = text
+        global pPath
+        pPath = text
         print("projectPath:" + str(text))
 
     def getPackPath(self, text):
-        self.datapackPath = text
+        global datapackPath
+        datapackPath = text
         print("datapackPath:" + str(text))
 
     def choosePackPath(self):
@@ -84,7 +94,8 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         self.show()
 
     def create_full_pack(self):
-        os.chdir(self.datapackPath)
+        global temp
+        os.chdir(datapackPath)
         os.mkdir("data")
         if self.v119 == 1:
             index = {
@@ -95,18 +106,21 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
             }
             with open("pack.mcmeta", "x") as fp:
                 json.dump(index, fp, indent=4, ensure_ascii=False)
-
         if self.v116 == 1:
             index = {
                 "pack": {
                     "pack_format": 6,
-                    "description": "Hello World你"
+                    "description": "Hello World"
                 }
             }
             with open("pack.mcmeta", "x") as fp:
                 json.dump(index, fp, indent=4, ensure_ascii=False)
-        os.chdir(self.datapackPath + "/data")
+        os.chdir(datapackPath + "/data")
         self.close()
+        # root
+        root_p = QTreeWidgetItem(pTree)
+        root_p.setText(0, projectName)
+        # children
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
@@ -119,6 +133,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
 
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
+        global pTree
         # 无边框初始化
         self.window_point = None
         self.start_point = None
@@ -160,6 +175,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
         # 文件树
+        pTree = self.project_tree
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
