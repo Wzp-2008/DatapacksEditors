@@ -5,6 +5,7 @@
 """
 import _io
 import json
+import time
 
 import utils
 import os.path
@@ -12,6 +13,7 @@ import sys
 import os
 import requests
 from winreg import *
+from PyQt6 import QtCore, QtGui
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
@@ -27,6 +29,7 @@ datapackPath = None
 pPath = None
 projectName = None
 pTree = None
+# functionPath = datapackPath + "/data/" + projectName + "/functions"
 
 
 class MC_Version_Management_Window(QWidget, Ui_Form):
@@ -116,11 +119,24 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
             with open("pack.mcmeta", "x") as fp:
                 json.dump(index, fp, indent=4, ensure_ascii=False)
         os.chdir(datapackPath + "/data")
+        os.mkdir(projectName)
+        os.chdir(projectName)
+        os.mkdir("functions")
+        os.mkdir("tags")
         self.close()
-        # root
+        # Tree_root
         root_p = QTreeWidgetItem(pTree)
         root_p.setText(0, projectName)
-        # children
+        # Tree_children
+        child0 = QTreeWidgetItem(root_p)
+        child0.setText(0, 'Functions')
+        root_p.addChild(child0)
+        child1 = QTreeWidgetItem(root_p)
+        child1.setText(0, 'Tags')
+        root_p.addChild(child1)
+        child2 = QTreeWidgetItem(root_p)
+        child2.setText(0, 'Advancements')
+        root_p.addChild(child2)
 
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
@@ -220,11 +236,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ismoving = False
         self.menubar.setNativeMenuBar(False)
 
-    # 文件树操作
-    def initUI(self, Qmodelidx):
-        filePath = self.fileModel.filePath(Qmodelidx)
-        print(filePath)
-
     # 无边框
     # 重写鼠标事件
     def mouseMoveEvent(self, e: QMouseEvent):
@@ -307,6 +318,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.tabWidget.addTab(text, 'new.mcfunction')
         # 文本框去边
         text.setStyleSheet("border:none;")
+        # open(functionPath + "/new.mcfunction", 'x')
 
     def click_count(self):
         self.count += 1
