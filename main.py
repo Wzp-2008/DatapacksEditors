@@ -98,6 +98,10 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
 
     def create_full_pack(self):
         global temp
+        # create project
+        os.chdir(projectName)
+        os.mkdir("logs")
+        # create pack
         os.chdir(datapackPath)
         os.mkdir("data")
         if self.v119 == 1:
@@ -124,9 +128,11 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         os.mkdir("functions")
         os.mkdir("tags")
         self.close()
+
         # Tree_root
         root_p = QTreeWidgetItem(pTree)
         root_p.setText(0, projectName)
+
         # Tree_children
         child0 = QTreeWidgetItem(root_p)
         child0.setText(0, 'Functions')
