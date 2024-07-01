@@ -170,8 +170,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         # 无边框，窗口美化
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setWindowIcon(QIcon('icon.ico'))
-        
-        #日志
+        #
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
