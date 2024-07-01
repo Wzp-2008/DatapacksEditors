@@ -35,6 +35,9 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-radius: 10px；</string>
+  </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
@@ -164,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>784</width>
-     <height>22</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="defaultUp">
