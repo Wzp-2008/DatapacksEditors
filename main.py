@@ -144,7 +144,6 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         child2.setText(0, 'Advancements')
         root_p.addChild(child2)
 
-
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __showRestoreWindow(self):
         """ 复原窗口并更换最大化按钮的图标 """
@@ -152,10 +151,14 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             self.window().showNormal()
         else:
             self.window().showMaximized()
+    
+    def minimize_window(self):
+        self.showMinimized()
 
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
         global pTree
+        
         # 无边框初始化
         self.window_point = None
         self.start_point = None
@@ -163,10 +166,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self._endPos = None
         self._tracking = False
         self.tab1 = None
+        
         # 无边框，窗口美化
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setWindowIcon(QIcon('icon.ico'))
-        #
+        
+        #日志
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
@@ -334,12 +339,11 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         for i in self.minecraftVersionList:
             if i['id'] == self.MC_window.minecrafts.selectedItems()[0].text():
                 url = i['url']
-                sourceList = ["https://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com",
-                              "https://download.mcbbs.net"]
+                sourceList = ["https://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com"]
                 s = utils.selectServer(sourceList)
-                source = url.replace("https://launchermeta.mojang.com", s)
+                source = url.replace("https://bmclapi2.bangbang93.com", s)
                 version = requests.get(source).json()
-                clientUrl = version['downloads']['client']['url'].replace("https://launcher.mojang.com", s)
+                clientUrl = version['downloads']['client']['url'].replace("https://bmclapi2.bangbang93.com", s)
                 minecraftFolder = os.path.join(self.RuntimePath, "Minecraft")
                 if not os.path.exists(minecraftFolder):
                     os.mkdir(minecraftFolder)

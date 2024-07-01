@@ -1,6 +1,7 @@
 from typing import List, Optional
 import ping3
 from os import path, mkdir, getcwd
+from loguru import logger as log
 
 
 def select_server(server_list: Optional[List[str]] = None) -> str:
@@ -10,8 +11,7 @@ def select_server(server_list: Optional[List[str]] = None) -> str:
     :return: the server which is the lowest ping
     """
     if server_list is None:
-        server_list = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com",
-                       "https://download.mcbbs.net"]
+        server_list = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com/"]
     result = {}
     time_list = []
     for i in server_list:
@@ -20,6 +20,8 @@ def select_server(server_list: Optional[List[str]] = None) -> str:
             time = float("INF")
         result[time] = i
         time_list.append(time)
+        log.info(str(i) + " ping: " + str(time))
+    log.info("Server: " + str(result[min(time_list)]))    
     return result[min(time_list)]
 
 

@@ -32,6 +32,7 @@ class MinecraftDownloader(object):
     def url_adopter(self, url: str) -> str:
         if self.base_url[-1] != "/":
             self.base_url += "/"
+        '''
         url = url.replace("https://launcher.mojang.com/", self.base_url)
         url = url.replace("http://launcher.mojang.com/", self.base_url)
         url = url.replace("http://launchermeta.mojang.com/", self.base_url)
@@ -40,6 +41,8 @@ class MinecraftDownloader(object):
         url = url.replace("https://resources.download.minecraft.net/", self.base_url + "assets/")
         url = url.replace("https://libraries.minecraft.net/", self.base_url + "maven/")
         url = url.replace("http://libraries.minecraft.net/", self.base_url + "maven/")
+        log.warning("Due to some problems, the download source has been changed to the official source!")
+        '''
         return url
 
     def do_get(self, url) -> Response:
@@ -47,11 +50,11 @@ class MinecraftDownloader(object):
         return self.session.get(url, headers=self.headers, proxies=self.proxies)
 
     def get_raw_minecraft_versions_list(self) -> List[Dict[str, str]]:
-        url = self.base_url + "/mc/game/version_manifest.json"
+        url = "http://launchermeta.mojang.com/mc/game/version_manifest.json"
         return self.do_get(url).json()['versions']
 
     def get_latest_minecraft_version(self) -> str:
-        url = self.base_url + "/mc/game/version_manifest.json"
+        url = "http://launchermeta.mojang.com/mc/game/version_manifest.json"
         return self.do_get(url).json()["latest"]["id"]
 
     def get_all_minecraft_versions_list(self) -> List[str]:
@@ -91,6 +94,7 @@ class MinecraftDownloader(object):
         return version_json_data
 
     def get_minecraft_client(self, version: str, bar: MyBar) -> bool:
+        log.info("The first startup requires downloading files, which may be slow.")
         init_game_dir()
         version_info = self.get_minecraft_version_info(version)
         game_path = path.join(version_path, version)
@@ -104,6 +108,7 @@ class MinecraftDownloader(object):
         client_url = version_info['downloads']['client']['url']
         version_jar_path = path.join(game_path, f"{version}.jar")
         if not path.exists(version_jar_path):
+            log.warning("Unable to find minecraft jar information!")
             self.downloader.download(self.url_adopter(client_url), version_jar_path, bar)
         # noinspection PyTypeChecker
         index_url = version_info["assetIndex"]["url"]
@@ -111,6 +116,7 @@ class MinecraftDownloader(object):
         index_id = version_info["assetIndex"]["id"]
         assets_json_path = path.join(assets_index_path, f"{index_id}.json")
         if not path.exists(assets_json_path):
+            log.warning("Unable to find minecraft version information!")
             assets_data = self.downloader.session.get(self.url_adopter(index_url)).json()
             with open(assets_json_path, "w") as fp:
                 fp.write(dumps(assets_data))
@@ -121,6 +127,8 @@ class MinecraftDownloader(object):
         q = DownloadQueue()
         q.req_session = self.downloader.session
         queue_bar: MyBar = MyBar(full=len(assets_objects_data.keys()))
+        log.info("Preparing for download.")
+        log.info("Progress: ")
         queue_bar.new_bar()
         queue_bar.start()
         for i in assets_objects_data.keys():
@@ -131,11 +139,12 @@ class MinecraftDownloader(object):
             create_default(dir_path)
             save_path = path.join(dir_path, hash_value)
             p = hash_value[0:2] + "/" + hash_value
-            default_url = f"https://resources.download.minecraft.net/{p}"
+            default_url = f"https://bmclapi2.bangbang93.com/assets/{p}"
             url = self.url_adopter(default_url)
             q.add_file(url, save_path, queue_bar, size)
         while queue_bar.running:
             pass
-        print("开始下载")
+        log.info("Start download!")
+        log.info("Download source: " + str(url))
         q.start_download()
         return True

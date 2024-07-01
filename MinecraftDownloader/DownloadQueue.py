@@ -5,6 +5,7 @@ from typing import List
 from requests import session
 from requests.sessions import Session, HTTPAdapter
 from ProgressBar import MyBar
+from loguru import logger as log
 
 headers = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -44,8 +45,8 @@ class DownloadQueue(object):
     now_file: int = 0
 
     def __init__(self):
-        self.req_session.mount("https://", HTTPAdapter(max_retries=5))
-        self.req_session.mount("http://", HTTPAdapter(max_retries=5))
+        self.req_session.mount("https://", HTTPAdapter(max_retries=256))
+        self.req_session.mount("http://", HTTPAdapter(max_retries=256))
 
     def add_file(self, url: str, save: path, adding_bar: MyBar, size: int):
         file = FileObject(self.req_session, url, save, size)

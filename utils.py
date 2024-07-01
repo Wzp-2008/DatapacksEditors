@@ -66,8 +66,8 @@ def ContrastMinecraftVersion(version1: str, version2: str, equals: bool) -> bool
 
 
 def getAllMinecraftVersion() -> List[dict]:
-    sourceList = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com", "https://download.mcbbs.net"]
-    source = "https://download.mcbbs.net" + "/mc/game/version_manifest.json"
+    sourceList = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com"]
+    source = "https://bmclapi2.bangbang93.com" + "/mc/game/version_manifest.json"
     minecraftList = requests.get(source).json()
     mcVersions_list = []
     for i in minecraftList["versions"]:

@@ -136,3 +136,6 @@ dmypy.json
 
 #games
 games/
+
+#VS
+.vs/
