@@ -133,3 +133,5 @@ dmypy.json
 
 #Runtime
 .Runtime/
+/.vs
+/games
