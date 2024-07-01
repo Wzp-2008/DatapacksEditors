@@ -170,7 +170,8 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         # 无边框，窗口美化
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setWindowIcon(QIcon('icon.ico'))
-        #
+        
+        #日志
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
@@ -200,25 +201,32 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
+        
         # 文件树
         pTree = self.project_tree
+        
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
+        
         # 新建mc函数文件
         self.create_ff.triggered.connect(self.On_new_function_btn_click)
         self.create_ff.triggered.connect(self.click_count)
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
+        
         # 创建完整数据包
         self.cfwindows = Create_Full_Window()
         self.full_pack.triggered.connect(self.cfwindows.OPEN)
+        
         # 图标
         self.namel.setIcon(QIcon('icon.ico'))
+        
         # 将按钮的点击信号连接到槽函数
         self.minBt.triggered.connect(self.window().showMinimized)
         self.maxBt.triggered.connect(self.__showRestoreWindow)
         self.closeBt.triggered.connect(self.window().close)
+        
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
