@@ -3,15 +3,18 @@
  Date:   2022/1/19
  Time:   21:32
 """
+import _io
+import json
+import time
+
 import utils
 import os.path
 import sys
 import os
 import requests
-import win32con
-import ctypes
 from winreg import *
-from PyQt6 import QtWidgets, QtCore
+from PyQt6 import QtCore, QtGui
+from PyQt6 import QtWidgets
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -20,6 +23,13 @@ from UI.DatapacksEditors import Ui_MainWindow
 from UI.Management import Ui_Form
 from UI.create_full import Ui_createfullwindows
 from loguru import logger as log
+
+temp: _io.TextIOWrapper = None
+datapackPath = None
+pPath = None
+projectName = None
+pTree = None
+# functionPath = datapackPath + "/data/" + projectName + "/functions"
 
 
 class MC_Version_Management_Window(QWidget, Ui_Form):
@@ -34,6 +44,8 @@ class MC_Version_Management_Window(QWidget, Ui_Form):
 class Create_Full_Window(QWidget, Ui_createfullwindows):
     def __init__(self):
         super(Create_Full_Window, self).__init__()
+        self.v116 = None
+        self.v119 = None
         self.datapackPath = None
         self.pPath = None
         self.projectName = None
@@ -47,19 +59,24 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         self.packname.textChanged.connect(self.getProjectName)
         self.packPath.textChanged.connect(self.getPackPath)
         self.projectPath.textChanged.connect(self.getProjectPath)
+        self.v_116.toggled['bool'].connect(self.readVersion)
+        self.v_119.toggled['bool'].connect(self.readVersion)
         # 创建按钮连接
         self.create_full_c.clicked.connect(self.create_full_pack)
 
     def getProjectName(self, text):
-        self.projectName = text
+        global projectName
+        projectName = text
         print("projectName:" + str(text))
 
     def getProjectPath(self, text):
-        self.pPath = text
+        global pPath
+        pPath = text
         print("projectPath:" + str(text))
 
     def getPackPath(self, text):
-        self.datapackPath = text
+        global datapackPath
+        datapackPath = text
         print("datapackPath:" + str(text))
 
     def choosePackPath(self):
@@ -70,12 +87,62 @@ class Create_Full_Window(QWidget, Ui_createfullwindows):
         projectPath = self.PathDialog.getExistingDirectory(self, self.PathDialogTitle)
         self.projectPath.setText(projectPath)
 
+    def readVersion(self):
+        if self.v_116.isChecked():
+            self.v116 = 1
+        if self.v_119.isChecked():
+            self.v119 = 1
+
     def OPEN(self):
         self.show()
 
     def create_full_pack(self):
-        pass
+        global temp
+        # create project
+        os.chdir(projectName)
+        os.mkdir("logs")
+        # create pack
+        os.chdir(datapackPath)
+        os.mkdir("data")
+        if self.v119 == 1:
+            index = {
+                "pack": {
+                    "pack_format": 10,
+                    "description": "Hello World"
+                }
+            }
+            with open("pack.mcmeta", "x") as fp:
+                json.dump(index, fp, indent=4, ensure_ascii=False)
+        if self.v116 == 1:
+            index = {
+                "pack": {
+                    "pack_format": 6,
+                    "description": "Hello World"
+                }
+            }
+            with open("pack.mcmeta", "x") as fp:
+                json.dump(index, fp, indent=4, ensure_ascii=False)
+        os.chdir(datapackPath + "/data")
+        os.mkdir(projectName)
+        os.chdir(projectName)
+        os.mkdir("functions")
+        os.mkdir("tags")
+        self.close()
 
+        # Tree_root
+        root_p = QTreeWidgetItem(pTree)
+        root_p.setText(0, projectName)
+
+        # Tree_children
+        child0 = QTreeWidgetItem(root_p)
+        child0.setText(0, 'Functions')
+        root_p.addChild(child0)
+        child1 = QTreeWidgetItem(root_p)
+        child1.setText(0, 'Tags')
+        root_p.addChild(child1)
+        child2 = QTreeWidgetItem(root_p)
+        child2.setText(0, 'Advancements')
+        root_p.addChild(child2)
 
 class DatapacksEditors(QMainWindow, Ui_MainWindow):
     def __showRestoreWindow(self):
@@ -84,9 +151,14 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
             self.window().showNormal()
         else:
             self.window().showMaximized()
+    
+    def minimize_window(self):
+        self.showMinimized()
 
     def __init__(self, parent=None):
         super(DatapacksEditors, self).__init__(parent)
+        global pTree
+        
         # 无边框初始化
         self.window_point = None
         self.start_point = None
@@ -94,10 +166,12 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self._endPos = None
         self._tracking = False
         self.tab1 = None
+        
         # 无边框，窗口美化
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setWindowIcon(QIcon('favicon.ico'))
-        #
+        self.setWindowIcon(QIcon('icon.ico'))
+        
+        #日志
         if not os.path.exists(os.path.join(os.getcwd(), "logs")):
             os.mkdir("logs")
         log.info("clear latest.log")
@@ -127,24 +201,32 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.ChineseSimplified.changed.connect(self.languageRadioChinese)
         self.English.changed.connect(self.languageRadioEnglish)
         self.dialog = QFileDialog()
+        
         # 文件树
+        pTree = self.project_tree
+        
         # 打开文件
         self.fileDialogTitle = "打开文件"
         self.open_project.triggered.connect(self.On_open_project_btn_click)
+        
         # 新建mc函数文件
         self.create_ff.triggered.connect(self.On_new_function_btn_click)
         self.create_ff.triggered.connect(self.click_count)
         self.count = 0
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
+        
         # 创建完整数据包
         self.cfwindows = Create_Full_Window()
         self.full_pack.triggered.connect(self.cfwindows.OPEN)
+        
         # 图标
-        self.namel.setIcon(QIcon('favicon.ico'))
+        self.namel.setIcon(QIcon('icon.ico'))
+        
         # 将按钮的点击信号连接到槽函数
         self.minBt.triggered.connect(self.window().showMinimized)
         self.maxBt.triggered.connect(self.__showRestoreWindow)
         self.closeBt.triggered.connect(self.window().close)
+        
         # 下载窗口
         self.MC_window = MC_Version_Management_Window()
         self.open_MC.triggered.connect(self.MC_window.OPEN)
@@ -171,11 +253,6 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         log.success("starting done.")
         self.ismoving = False
         self.menubar.setNativeMenuBar(False)
-
-    # 文件树操作
-    def initUI(self, Qmodelidx):
-        filePath = self.fileModel.filePath(Qmodelidx)
-        print(filePath)
 
     # 无边框
     # 重写鼠标事件
@@ -259,6 +336,7 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         self.tabWidget.addTab(text, 'new.mcfunction')
         # 文本框去边
         text.setStyleSheet("border:none;")
+        # open(functionPath + "/new.mcfunction", 'x')
 
     def click_count(self):
         self.count += 1
@@ -268,12 +346,11 @@ class DatapacksEditors(QMainWindow, Ui_MainWindow):
         for i in self.minecraftVersionList:
             if i['id'] == self.MC_window.minecrafts.selectedItems()[0].text():
                 url = i['url']
-                sourceList = ["http://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com",
-                              "https://download.mcbbs.net"]
+                sourceList = ["https://launchermeta.mojang.com", "https://bmclapi2.bangbang93.com"]
                 s = utils.selectServer(sourceList)
-                source = url.replace("https://launchermeta.mojang.com", s)
+                source = url.replace("https://bmclapi2.bangbang93.com", s)
                 version = requests.get(source).json()
-                clientUrl = version['downloads']['client']['url'].replace("https://launcher.mojang.com", s)
+                clientUrl = version['downloads']['client']['url'].replace("https://bmclapi2.bangbang93.com", s)
                 minecraftFolder = os.path.join(self.RuntimePath, "Minecraft")
                 if not os.path.exists(minecraftFolder):
                     os.mkdir(minecraftFolder)

@@ -75,28 +75,14 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QCheckBox" name="checkBox_116">
+     <widget class="QRadioButton" name="v_116">
       <property name="text">
-       <string>1.16.x</string>
+       <string>1.16-1.18</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QCheckBox" name="checkBox_118">
-      <property name="text">
-       <string>1.18.x</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkbox_117">
-      <property name="text">
-       <string>1.17.x</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_119">
+     <widget class="QRadioButton" name="v_119">
       <property name="text">
        <string>1.19+</string>
       </property>
@@ -216,5 +202,22 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>v_116</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>153</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
