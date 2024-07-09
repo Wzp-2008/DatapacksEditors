@@ -139,3 +139,6 @@ games/
 
 #VS
 .vs/
+.Runtime/
+/.vs
+/games
